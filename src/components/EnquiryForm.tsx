@@ -83,78 +83,83 @@ const EnquiryForm = () => {
 
   return (
     <div className="enquiry-card">
-      <h2 className="enquiry-card__title">Enquire Now</h2>
-      <p className="enquiry-card__subtitle">Fill in your details and our expert will contact you shortly.</p>
+      <div className="enquiry-card__head">
+        <span className="enquiry-card__badge">Quick Enquiry</span>
+        <h2 className="enquiry-card__title">Enquire Now</h2>
+        <p className="enquiry-card__subtitle">Fill in your details and our expert will contact you shortly.</p>
+      </div>
 
       <form className="enquiry-form" onSubmit={handleSubmit} noValidate>
-        <div className={fieldClass('name')}>
-          <label htmlFor={fieldId('name')} className="visually-hidden">Your Name</label>
-          <UserIcon className="form-field__icon" />
-          <input
-            id={fieldId('name')}
-            name="name"
-            type="text"
-            placeholder="Your Name"
-            autoComplete="name"
-            value={values.name}
-            onChange={handleChange}
-            {...errorProps('name')}
-          />
-          {renderError('name')}
-        </div>
-
-        <div className={fieldClass('mobile')}>
-          <label htmlFor={fieldId('mobile')} className="visually-hidden">Mobile Number</label>
-          <PhoneIcon className="form-field__icon" />
-          <input
-            id={fieldId('mobile')}
-            name="mobile"
-            type="tel"
-            inputMode="numeric"
-            placeholder="Mobile Number"
-            autoComplete="tel-national"
-            value={values.mobile}
-            onChange={handleChange}
-            {...errorProps('mobile')}
-          />
-          {renderError('mobile')}
-        </div>
-
-        <div className={fieldClass('email')}>
-          <label htmlFor={fieldId('email')} className="visually-hidden">Email Address (optional)</label>
-          <MailIcon className="form-field__icon" />
-          <input
-            id={fieldId('email')}
-            name="email"
-            type="email"
-            placeholder="Email Address"
-            autoComplete="email"
-            value={values.email}
-            onChange={handleChange}
-            {...errorProps('email')}
-          />
-          {renderError('email')}
-        </div>
-
-        <div className={`${fieldClass('interest')} form-field--select`}>
-          <label htmlFor={fieldId('interest')} className="visually-hidden">Interested In</label>
-          <LayersIcon className="form-field__icon" />
-          <select
-            id={fieldId('interest')}
-            name="interest"
-            value={values.interest}
-            onChange={handleChange}
-            className={values.interest ? '' : 'is-placeholder'}
-            {...errorProps('interest')}
-          >
-            <option value="" disabled>Interested In</option>
-            {PLOT_TYPES.map((type) => (
-              <option key={type.value} value={type.value}>
-                {type.label}
-              </option>
-            ))}
-          </select>
-          {renderError('interest')}
+        <div className="enquiry-form__grid">
+          <div className={fieldClass('name')}>
+            <label htmlFor={fieldId('name')} className="visually-hidden">Your Name</label>
+            <UserIcon className="form-field__icon" />
+            <input
+              id={fieldId('name')}
+              name="name"
+              type="text"
+              placeholder="Your Name"
+              autoComplete="name"
+              value={values.name}
+              onChange={handleChange}
+              {...errorProps('name')}
+            />
+            {renderError('name')}
+          </div>
+  
+          <div className={fieldClass('mobile')}>
+            <label htmlFor={fieldId('mobile')} className="visually-hidden">Mobile Number</label>
+            <PhoneIcon className="form-field__icon" />
+            <input
+              id={fieldId('mobile')}
+              name="mobile"
+              type="tel"
+              inputMode="numeric"
+              placeholder="Mobile Number"
+              autoComplete="tel-national"
+              value={values.mobile}
+              onChange={handleChange}
+              {...errorProps('mobile')}
+            />
+            {renderError('mobile')}
+          </div>
+  
+          <div className={fieldClass('email')}>
+            <label htmlFor={fieldId('email')} className="visually-hidden">Email Address (optional)</label>
+            <MailIcon className="form-field__icon" />
+            <input
+              id={fieldId('email')}
+              name="email"
+              type="email"
+              placeholder="Email Address"
+              autoComplete="email"
+              value={values.email}
+              onChange={handleChange}
+              {...errorProps('email')}
+            />
+            {renderError('email')}
+          </div>
+  
+          <div className={`${fieldClass('interest')} form-field--select`}>
+            <label htmlFor={fieldId('interest')} className="visually-hidden">Interested In</label>
+            <LayersIcon className="form-field__icon" />
+            <select
+              id={fieldId('interest')}
+              name="interest"
+              value={values.interest}
+              onChange={handleChange}
+              className={values.interest ? '' : 'is-placeholder'}
+              {...errorProps('interest')}
+            >
+              <option value="" disabled>Interested In</option>
+              {PLOT_TYPES.map((type) => (
+                <option key={type.value} value={type.value}>
+                  {type.label}
+                </option>
+              ))}
+            </select>
+            {renderError('interest')}
+          </div>
         </div>
 
         <button type="submit" className="btn-hero btn-hero--primary btn-hero--block" disabled={submitting}>
