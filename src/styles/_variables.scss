@@ -1,0 +1,148 @@
+@use "sass:map"; //Other variables
+$fsize: 16px;
+$font-family: "Poppins", sans-serif;
+
+// ─── Brand palette (Treeland) ─────────────────────────────────────────────
+// Primary   → green from the logo ("LAND", #31AD4A)
+// Secondary → deep navy used for the header / brand surfaces
+// Accent    → fresh lime highlight from the lighter leaf
+
+//define a color variables
+$colors: (
+  "primary-color": #31ad4a,
+  "Primary-10": #0f2a13,
+  "Primary-20": #1a4521,
+  "Primary-30": #24602e,
+  "Primary-40": #2e7d3a,
+  "Primary-50": #369244,
+  "Primary-60": #31ad4a,
+  "Primary-70": #66b971,
+  "Primary-80": #8fcd97,
+  "Primary-90": #d9efdc,
+  "secondary-color": #0b1f3f,
+  "secondary-10": #040b17,
+  "secondary-20": #071429,
+  "secondary-30": #0b1f3f,
+  "secondary-40": #13294f,
+  "secondary-50": #1c3660,
+  "secondary-60": #2a4877,
+  "secondary-70": #4a6592,
+  "secondary-80": #7b90b3,
+  "secondary-90": #c3cee0,
+  "accent-color": #8cc63f,
+  "white-color": #fff,
+  "black-color": #000,
+  "black-10": #121212,
+  "black-20": #242424,
+  "black-30": #373737,
+  "black-40": #494949,
+  "black-50": #5B5B5B,
+  "black-60": #6D6D6D,
+  "black-70": #808080,
+  "black-80": #929292,
+  "black-90": #A4A4A4,
+  "black-100": #d4d4d4,
+  "black-110": #f0efef,
+  "red-color": #ff0000,
+);
+
+//loop colours
+@each $color-name, $color-value in $colors {
+  .bg-#{$color-name} {
+    background-color: $color-value;
+  }
+  .text-#{$color-name} {
+    color: $color-value;
+  }
+  .border-#{$color-name} {
+    border: 1px solid $color-value;
+  }
+}
+
+//examples using
+/**
+<div className="bg-primary-color text-white-color p-3"></div>
+<div className="border-white-color p-3"></div>
+**/
+
+//Font Weights Map
+$font-weights: (
+  "light": 300,
+  "regular": 400,
+  "medium": 500,
+  "semibold": 600,
+  "bold": 700,
+);
+
+//Loop $weight-name, $weight-value in $font-weights
+@each $weight-name, $weight-value in $font-weights {
+  .font-#{$weight-name} {
+    font-weight: $weight-value;
+  }
+}
+
+/*
+<p className="font-light">This text has a light font weight.</p>
+*/
+
+//device breakpoints
+$breakpoints: (
+  "xs": 0,
+  "sm": 576px,
+  "md": 768px,
+  "lg": 992px,
+  "xl": 1200px,
+  "xxl": 1400px,
+);
+
+// ─── Brand token shortcuts ────────────────────────────────────────────────
+// Pull named scalars so partials can reference $var directly via the v. namespace
+// instead of repeating raw hex values.
+
+// Primary (leaf green)
+$primary:        map.get($colors, "primary-color");
+$primary-dark:   map.get($colors, "Primary-40");   // pressed / active states
+$primary-hover:  map.get($colors, "Primary-50");   // hover shade
+$primary-light:  map.get($colors, "Primary-70");   // light leaf
+$accent:         map.get($colors, "accent-color"); // lime highlight
+
+// Secondary (navy)
+$secondary:       map.get($colors, "secondary-color");
+$secondary-dark:  map.get($colors, "secondary-20");  // deeper navy (gradients, off-canvas)
+$secondary-hover: map.get($colors, "secondary-40");  // hover / raised surface
+$secondary-line:  rgba(255, 255, 255, 0.12);         // dividers on navy
+
+// Neutral surface
+$white:          #fff;
+$light-green:    map.get($colors, "Primary-90");   // tint / hover background
+$gray-50:        #f9f9f9;   // input / card surface
+$gray-border:    #e4e4e4;   // border / divider line
+
+// Text
+$gray-mid:       #a4a4a4;   // = "black-90" — placeholder, muted icon
+$text-dark:      #242424;   // = "black-20" — primary body text
+$text-muted:     #5b5b5b;   // = "black-50" — secondary / label text
+$text-on-dark:   rgba(255, 255, 255, 0.92);
+
+// Social brand colours
+$social: (
+  "facebook":  #3b5998,
+  "instagram": linear-gradient(45deg, #f9ce34 0%, #ee2a7b 50%, #6228d7 100%),
+  "youtube":   #e62117,
+  "linkedin":  #0a66c2,
+);
+
+$whatsapp:       #25d366;
+$whatsapp-dark:  #1da851;
+
+// Semantic
+$danger:         #dc3545;
+$danger-dark:    #b02a37;
+$danger-bg:      #fff5f5;
+
+// Layout
+$container-width: 90%;
+$header-height:    78px;
+$header-height-sm: 66px;
+$offcanvas-width:  320px;
+$transition:       0.3s ease;

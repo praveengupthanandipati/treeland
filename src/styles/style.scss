@@ -1,0 +1,1063 @@
+@use "sass:map";
+@use "./variables" as v;
+@use "./mixins" as m;
+
+// ═══════════════════════════════════════════════════════════════════════════
+// Base
+// ═══════════════════════════════════════════════════════════════════════════
+
+:root {
+  --bs-body-font-family: #{v.$font-family};
+  --bs-primary: #{v.$primary};
+  --bs-link-color: #{v.$primary};
+  --bs-link-hover-color: #{v.$primary-dark};
+}
+
+html {
+  font-size: v.$fsize;
+  scroll-behavior: smooth;
+}
+
+body {
+  @include m.siteMain;
+  color: v.$text-dark;
+  background: v.$white;
+
+  &.offcanvas-open {
+    overflow: hidden;
+  }
+}
+
+a {
+  text-decoration: none;
+}
+
+.site-container {
+  @include m.site-container;
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// Header
+// ═══════════════════════════════════════════════════════════════════════════
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 1030;
+  width: 100%;
+  background: linear-gradient(90deg, v.$secondary-dark 0%, v.$secondary 50%, v.$secondary-dark 100%);
+  color: v.$text-on-dark;
+  @include m.transition(box-shadow);
+
+  &.is-scrolled {
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.35);
+  }
+
+  &__inner {
+    @include m.flex(space-between, center, 16px);
+    min-height: v.$header-height-sm;
+
+    @include m.mq(md) {
+      min-height: v.$header-height;
+    }
+  }
+
+  &__actions {
+    @include m.flex(flex-end, center, 12px);
+    flex-shrink: 0;
+
+    @include m.mq(xl) {
+      gap: 20px;
+    }
+  }
+}
+
+// ─── Logo ──────────────────────────────────────────────────────────────────
+
+.site-logo {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+  @include m.focus-ring;
+
+  &__img {
+    display: block;
+    height: 44px;
+    width: auto;
+    aspect-ratio: 479.4 / 212.5;
+
+    @include m.mq(md) {
+      height: 54px;
+    }
+  }
+
+  // Black in the source file – white on the navy header
+  &__light {
+    fill: v.$white;
+  }
+
+  &__green {
+    fill: v.$primary;
+  }
+}
+
+// ─── Main navigation ───────────────────────────────────────────────────────
+
+.main-nav {
+  &__list {
+    @include m.reset-list;
+  }
+
+  &__link {
+    display: inline-block;
+    color: v.$text-on-dark;
+    font-size: 0.95rem;
+    font-weight: 400;
+    @include m.transition(color);
+    @include m.focus-ring;
+
+    &:hover,
+    &.active {
+      color: v.$accent;
+    }
+  }
+
+  &__parent {
+    @include m.flex(space-between, center, 6px);
+  }
+
+  &__toggle {
+    @include m.flex-center;
+    padding: 4px;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
+    @include m.focus-ring;
+
+    svg {
+      width: 14px;
+      height: 14px;
+      @include m.transition(transform);
+    }
+  }
+
+  .has-dropdown.is-open .main-nav__toggle svg {
+    transform: rotate(180deg);
+  }
+
+  &__dropdown {
+    @include m.reset-list;
+  }
+
+  &__dropdown-link {
+    display: block;
+    font-size: 0.9rem;
+    @include m.transition(color, background, padding);
+    @include m.focus-ring;
+  }
+
+  // Off-canvas-only parts are hidden on desktop
+  &__head,
+  &__footer {
+    display: none;
+  }
+
+  // ── Desktop (xl and up): inline menu ────────────────────────────────────
+  @include m.mq(xl) {
+    flex: 1;
+    @include m.flex(center);
+
+    &__list {
+      @include m.flex(center, center, 24px);
+    }
+
+    &__link {
+      @include m.underline-hover(v.$primary);
+    }
+
+    &__item {
+      position: relative;
+    }
+
+    &__toggle {
+      color: v.$text-on-dark;
+    }
+
+    &__dropdown {
+      position: absolute;
+      top: calc(100% + 18px);
+      left: -16px;
+      min-width: 220px;
+      padding: 10px 0;
+      background: v.$white;
+      border-radius: 10px;
+      border-top: 3px solid v.$primary;
+      box-shadow: 0 16px 40px rgba(v.$secondary-dark, 0.25);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(10px);
+      @include m.transition(opacity, transform, visibility);
+
+      // hover bridge so the menu doesn't close while moving the cursor down
+      &::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: -21px;
+        height: 21px;
+      }
+    }
+
+    .has-dropdown:hover .main-nav__dropdown,
+    .has-dropdown.is-open .main-nav__dropdown {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .has-dropdown:hover .main-nav__toggle svg {
+      transform: rotate(180deg);
+    }
+
+    &__dropdown-link {
+      padding: 9px 20px;
+      color: v.$text-dark;
+
+      &:hover,
+      &.active {
+        color: v.$primary-dark;
+        background: v.$light-green;
+        padding-left: 26px;
+      }
+    }
+  }
+
+  @include m.mq(xxl) {
+    &__list {
+      gap: 30px;
+    }
+  }
+
+  // ── Below xl: off-canvas panel ──────────────────────────────────────────
+  @include m.mq-down(xl) {
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 1050;
+    width: min(#{v.$offcanvas-width}, 85vw);
+    height: 100vh;
+    height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    background: v.$secondary-dark;
+    box-shadow: -10px 0 40px rgba(0, 0, 0, 0.4);
+    overflow-y: auto;
+    transform: translateX(100%);
+    visibility: hidden;
+    @include m.transition(transform, visibility);
+
+    &.is-open {
+      transform: translateX(0);
+      visibility: visible;
+    }
+
+    &__head {
+      @include m.flex(space-between, center);
+      padding: 16px 20px;
+      border-bottom: 1px solid v.$secondary-line;
+    }
+
+    &__close {
+      @include m.icon-pill(v.$secondary-hover, 38px, 10px);
+      border: 0;
+      color: v.$white;
+      cursor: pointer;
+      @include m.focus-ring;
+
+      svg {
+        width: 20px;
+        height: 20px;
+      }
+
+      &:hover {
+        background: v.$primary;
+      }
+    }
+
+    &__list {
+      flex: 1;
+      padding: 8px 0;
+    }
+
+    &__item {
+      border-bottom: 1px solid v.$secondary-line;
+    }
+
+    &__link {
+      display: block;
+      flex: 1;
+      padding: 14px 20px;
+      font-size: 1rem;
+
+      &.active {
+        color: v.$accent;
+        box-shadow: inset 3px 0 0 v.$primary;
+      }
+    }
+
+    &__toggle {
+      width: 44px;
+      height: 44px;
+      margin-right: 8px;
+
+      svg {
+        width: 16px;
+        height: 16px;
+      }
+    }
+
+    // Accordion submenu
+    &__dropdown {
+      max-height: 0;
+      overflow: hidden;
+      background: rgba(255, 255, 255, 0.04);
+      @include m.transition(max-height);
+    }
+
+    .has-dropdown.is-open .main-nav__dropdown {
+      max-height: 400px;
+    }
+
+    &__dropdown-link {
+      padding: 11px 20px 11px 36px;
+      color: rgba(255, 255, 255, 0.75);
+
+      &:hover,
+      &.active {
+        color: v.$accent;
+      }
+    }
+
+    &__footer {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      padding: 20px;
+      border-top: 1px solid v.$secondary-line;
+    }
+  }
+}
+
+// Backdrop behind the off-canvas menu
+.offcanvas-backdrop-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1040;
+  background: rgba(v.$secondary-dark, 0.6);
+  opacity: 0;
+  visibility: hidden;
+  @include m.transition(opacity, visibility);
+
+  &.is-visible {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  @include m.mq(xl) {
+    display: none;
+  }
+}
+
+// ─── Hamburger ─────────────────────────────────────────────────────────────
+
+.menu-toggle {
+  @include m.icon-pill(v.$primary, 42px, 10px);
+  border: 0;
+  color: v.$white;
+  cursor: pointer;
+  @include m.focus-ring;
+
+  svg {
+    width: 22px;
+    height: 22px;
+  }
+
+  &:hover {
+    background: v.$primary-hover;
+  }
+
+  @include m.mq(xl) {
+    display: none;
+  }
+}
+
+// ─── Call button ───────────────────────────────────────────────────────────
+
+.btn-call {
+  @include m.flex(center, center, 10px);
+  flex-shrink: 0;
+  color: v.$white;
+  font-size: 0.95rem;
+  font-weight: 500;
+  white-space: nowrap;
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  border-radius: 50px;
+  @include m.transition(background, border-color, color);
+  @include m.focus-ring;
+
+  // icon-only round button on small screens
+  width: 42px;
+  height: 42px;
+
+  svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  &__text {
+    display: none;
+  }
+
+  &:hover {
+    color: v.$white;
+    background: v.$primary;
+    border-color: v.$primary;
+  }
+
+  @include m.mq(md) {
+    width: auto;
+    height: auto;
+    padding: 10px 22px;
+
+    &__text {
+      display: inline;
+    }
+  }
+
+  @include m.mq(xxl) {
+    padding: 11px 26px;
+  }
+
+  // Full-width variant inside the off-canvas footer
+  &--block {
+    width: 100%;
+    height: auto;
+    padding: 12px 20px;
+    background: v.$primary;
+    border-color: v.$primary;
+
+    &:hover {
+      background: v.$primary-hover;
+    }
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// Buttons
+// ═══════════════════════════════════════════════════════════════════════════
+
+.btn-hero {
+  @include m.flex(center, center, 10px);
+  display: inline-flex;
+  padding: 14px 26px;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  line-height: 1.2;
+  cursor: pointer;
+  @include m.transition(background, border-color, color, transform, box-shadow);
+  @include m.focus-ring(v.$accent);
+
+  svg {
+    width: 16px;
+    height: 16px;
+    @include m.transition(transform);
+  }
+
+  &:hover {
+    transform: translateY(-2px);
+
+    svg {
+      transform: translateX(4px);
+    }
+  }
+
+  &:disabled {
+    opacity: 0.75;
+    cursor: wait;
+    transform: none;
+  }
+
+  @include m.mq(md) {
+    padding: 15px 30px;
+    font-size: 0.92rem;
+  }
+
+  &--primary {
+    color: v.$white;
+    background: linear-gradient(135deg, v.$primary 0%, v.$primary-dark 100%);
+    box-shadow: 0 10px 24px rgba(v.$primary, 0.35);
+
+    &:hover {
+      color: v.$white;
+      box-shadow: 0 14px 30px rgba(v.$primary, 0.45);
+    }
+  }
+
+  &--dark {
+    color: v.$white;
+    background: rgba(v.$secondary, 0.85);
+    border-color: rgba(255, 255, 255, 0.18);
+    backdrop-filter: blur(6px);
+
+    &:hover {
+      color: v.$white;
+      background: v.$secondary;
+      border-color: rgba(255, 255, 255, 0.4);
+    }
+  }
+
+  &--outline-dark {
+    color: v.$secondary;
+    background: transparent;
+    border-color: map.get(v.$colors, "secondary-90");
+
+    &:hover {
+      color: v.$white;
+      background: v.$secondary;
+      border-color: v.$secondary;
+    }
+  }
+
+  &--block {
+    width: 100%;
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// Hero banner
+// ═══════════════════════════════════════════════════════════════════════════
+
+.hero {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  color: v.$white;
+  padding-block: 48px 56px;
+
+  @include m.mq(md) {
+    padding-block: 64px 72px;
+  }
+
+  @include m.mq(lg) {
+    display: flex;
+    align-items: center;
+    min-height: clamp(600px, calc(100svh - #{v.$header-height}), 860px);
+    padding-block: 56px;
+  }
+
+  &__bg {
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    animation: hero-zoom 18s ease-out both;
+  }
+
+  // Navy wash keeps white text readable over the bright photo
+  &__overlay {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background:
+      linear-gradient(180deg, rgba(v.$secondary-dark, 0.55) 0%, rgba(v.$secondary-dark, 0.8) 55%, rgba(v.$secondary-dark, 0.95) 100%);
+
+    @include m.mq(lg) {
+      background:
+        linear-gradient(90deg, rgba(v.$secondary-dark, 0.9) 0%, rgba(v.$secondary, 0.65) 45%, rgba(v.$secondary, 0.15) 100%),
+        linear-gradient(0deg, rgba(v.$secondary-dark, 0.55) 0%, transparent 35%);
+    }
+  }
+
+  &__inner {
+    display: grid;
+    gap: 40px;
+
+    @include m.mq(lg) {
+      grid-template-columns: minmax(0, 1fr) minmax(360px, 410px);
+      align-items: center;
+      gap: 48px;
+    }
+
+    @include m.mq(xxl) {
+      grid-template-columns: minmax(0, 1fr) 440px;
+      gap: 80px;
+    }
+  }
+
+  &__content {
+    max-width: 720px;
+    animation: fade-up 0.8s ease-out both;
+  }
+
+  &__eyebrow {
+    @include m.flex(flex-start, center, 10px);
+    display: inline-flex;
+    margin-bottom: 18px;
+    padding: 7px 16px;
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50px;
+    backdrop-filter: blur(6px);
+  }
+
+  &__eyebrow-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: v.$accent;
+    box-shadow: 0 0 0 0 rgba(v.$accent, 0.6);
+    animation: pulse-ring 2s infinite;
+  }
+
+  &__title {
+    margin: 0 0 18px;
+    font-size: clamp(2.1rem, 3.6vw + 0.8rem, 4.1rem);
+    font-weight: 700;
+    line-height: 1.12;
+    letter-spacing: -0.5px;
+    text-shadow: 0 4px 24px rgba(0, 0, 0, 0.25);
+  }
+
+  &__highlight {
+    position: relative;
+    color: v.$accent;
+    white-space: nowrap;
+
+    // hand-drawn style underline
+    &::after {
+      content: "";
+      position: absolute;
+      left: 2%;
+      right: 2%;
+      bottom: -0.08em;
+      height: 0.14em;
+      border-radius: 1em;
+      background: linear-gradient(90deg, v.$primary, v.$accent);
+      opacity: 0.85;
+    }
+  }
+
+  &__lead {
+    margin: 0 0 30px;
+    font-size: clamp(1rem, 0.4vw + 0.9rem, 1.22rem);
+    font-weight: 400;
+    line-height: 1.7;
+    color: rgba(255, 255, 255, 0.9);
+  }
+
+  &__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin-bottom: 36px;
+
+    @include m.mq-down(sm) {
+      .btn-hero {
+        flex: 1 1 100%;
+      }
+    }
+
+    @include m.mq(lg) {
+      margin-bottom: 48px;
+    }
+  }
+
+  &__features {
+    @include m.reset-list;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+    padding: 18px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 16px;
+    backdrop-filter: blur(10px);
+
+    // 4 in a row when the content column is wide enough: tablet (stacked
+    // layout, full width) and large desktop; 2 × 2 beside the form on laptops
+    @include m.mq(md) {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 0;
+      padding: 18px 8px;
+    }
+
+    @include m.mq(lg) {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+      padding: 18px;
+    }
+
+    @include m.mq(xxl) {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 0;
+      padding: 18px 8px;
+    }
+  }
+
+  &__form {
+    width: 100%;
+    max-width: 520px;
+    margin-inline: auto;
+    animation: fade-up 0.8s 0.15s ease-out both;
+
+    @include m.mq(lg) {
+      max-width: none;
+    }
+  }
+}
+
+.hero-feature {
+  @include m.flex(flex-start, center, 12px);
+
+  // centred with dividers only in the single-row layouts
+  @include m.mq(md) {
+    justify-content: center;
+    padding-inline: 10px;
+
+    & + & {
+      border-left: 1px solid rgba(255, 255, 255, 0.16);
+    }
+  }
+
+  @include m.mq(lg) {
+    justify-content: flex-start;
+    padding-inline: 0;
+
+    & + & {
+      border-left: 0;
+    }
+  }
+
+  @include m.mq(xxl) {
+    justify-content: center;
+    padding-inline: 10px;
+
+    & + & {
+      border-left: 1px solid rgba(255, 255, 255, 0.16);
+    }
+  }
+
+  &__icon {
+    @include m.flex-center;
+    flex-shrink: 0;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    color: v.$accent;
+    background: rgba(v.$primary, 0.18);
+    border: 1px solid rgba(v.$accent, 0.45);
+
+    svg {
+      width: 22px;
+      height: 22px;
+    }
+  }
+
+  &__text {
+    display: flex;
+    flex-direction: column;
+    font-size: 0.82rem;
+    line-height: 1.35;
+    color: rgba(255, 255, 255, 0.85);
+
+    strong {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: v.$white;
+    }
+  }
+}
+
+// ─── Enquiry card ──────────────────────────────────────────────────────────
+
+.enquiry-card {
+  position: relative;
+  overflow: hidden;
+  padding: 30px 22px 22px;
+  color: v.$text-dark;
+  background: v.$white;
+  border-radius: 20px;
+  box-shadow: 0 30px 60px rgba(v.$secondary-dark, 0.35);
+
+  // brand accent bar
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto;
+    height: 5px;
+    background: linear-gradient(90deg, v.$primary, v.$accent);
+  }
+
+  @include m.mq(sm) {
+    padding: 34px 30px 24px;
+  }
+
+  &__title {
+    margin: 0 0 6px;
+    font-size: 1.65rem;
+    font-weight: 600;
+    text-align: center;
+    color: v.$secondary;
+  }
+
+  &__subtitle {
+    margin: 0 auto 22px;
+    max-width: 300px;
+    font-size: 0.88rem;
+    line-height: 1.6;
+    text-align: center;
+    color: v.$text-muted;
+  }
+
+  &--success {
+    text-align: center;
+    padding-block: 48px 36px;
+
+    .btn-hero {
+      margin-top: 8px;
+    }
+  }
+
+  &__success-icon {
+    width: 64px;
+    height: 64px;
+    margin-bottom: 14px;
+    color: v.$primary;
+  }
+}
+
+.enquiry-form {
+  &__privacy {
+    @include m.flex(center, center, 8px);
+    margin: 16px 0 0;
+    font-size: 0.82rem;
+    color: v.$text-muted;
+
+    svg {
+      width: 14px;
+      height: 14px;
+      color: v.$secondary;
+    }
+  }
+}
+
+.form-field {
+  position: relative;
+  margin-bottom: 14px;
+
+  &__icon {
+    position: absolute;
+    top: 26px;
+    left: 16px;
+    width: 17px;
+    height: 17px;
+    color: v.$gray-mid;
+    transform: translateY(-50%);
+    pointer-events: none;
+    @include m.transition(color);
+  }
+
+  input,
+  select {
+    width: 100%;
+    height: 52px;
+    padding: 0 16px 0 46px;
+    font-family: inherit;
+    font-size: 0.93rem;
+    color: v.$text-dark;
+    background: #f6f8fa;
+    border: 1px solid #e1e6ec;
+    border-radius: 10px;
+    outline: none;
+    @include m.transition(border-color, background, box-shadow);
+
+    &::placeholder {
+      color: v.$gray-mid;
+    }
+
+    &:hover {
+      border-color: #cfd6df;
+    }
+
+    &:focus {
+      background: v.$white;
+      border-color: v.$primary;
+      box-shadow: 0 0 0 4px rgba(v.$primary, 0.14);
+    }
+  }
+
+  &:focus-within &__icon {
+    color: v.$primary;
+  }
+
+  &--select select {
+    appearance: none;
+    padding-right: 44px;
+    cursor: pointer;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230b1f3f' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 16px center;
+    background-size: 14px;
+
+    &.is-placeholder {
+      color: v.$gray-mid;
+    }
+
+    option {
+      color: v.$text-dark;
+    }
+  }
+
+  &.has-error {
+    input,
+    select {
+      border-color: v.$danger;
+      background-color: v.$danger-bg;
+
+      &:focus {
+        box-shadow: 0 0 0 4px rgba(v.$danger, 0.14);
+      }
+    }
+
+    .form-field__icon {
+      color: v.$danger;
+    }
+  }
+
+  &__error {
+    display: block;
+    margin-top: 5px;
+    padding-left: 4px;
+    font-size: 0.76rem;
+    color: v.$danger;
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// Floating contact
+// ═══════════════════════════════════════════════════════════════════════════
+
+.whatsapp-fab {
+  @include m.flex-center;
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  z-index: 1020;
+  width: 54px;
+  height: 54px;
+  color: v.$white;
+  background: v.$whatsapp;
+  border-radius: 50%;
+  box-shadow: 0 10px 24px rgba(v.$whatsapp, 0.45);
+  @include m.transition(transform, background);
+  @include m.focus-ring(v.$whatsapp);
+
+  // soft pulse ring
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: 2px solid v.$whatsapp;
+    animation: fab-ping 2.2s ease-out infinite;
+  }
+
+  svg {
+    width: 30px;
+    height: 30px;
+  }
+
+  &:hover {
+    color: v.$white;
+    background: v.$whatsapp-dark;
+    transform: scale(1.08);
+  }
+
+  @include m.mq(md) {
+    right: 24px;
+    bottom: 24px;
+    width: 60px;
+    height: 60px;
+
+    svg {
+      width: 34px;
+      height: 34px;
+    }
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// Animations
+// ═══════════════════════════════════════════════════════════════════════════
+
+@keyframes hero-zoom {
+  from { transform: scale(1.12); }
+  to   { transform: scale(1); }
+}
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse-ring {
+  0%   { box-shadow: 0 0 0 0 rgba(v.$accent, 0.6); }
+  70%  { box-shadow: 0 0 0 8px rgba(v.$accent, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(v.$accent, 0); }
+}
+
+@keyframes fab-ping {
+  0%   { transform: scale(1); opacity: 0.8; }
+  100% { transform: scale(1.5); opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// Pages
+// ═══════════════════════════════════════════════════════════════════════════
+
+.page-placeholder {
+  padding-block: 60px;
+
+  h1 {
+    color: v.$secondary;
+    font-weight: 600;
+  }
+
+  p {
+    color: v.$text-muted;
+  }
+}
