@@ -3,6 +3,11 @@ import { FacebookIcon, InstagramIcon, LinkedinIcon, YoutubeIcon } from '../compo
 
 export const PHONE_DISPLAY = '+91 98765 43210'
 export const PHONE_HREF = 'tel:+919876543210'
+// TODO: replace with the real office details
+export const EMAIL = 'info@treeland.in'
+export const EMAIL_HREF = `mailto:${EMAIL}`
+export const ADDRESS = 'Plot 42, Road No. 36, Jubilee Hills, Hyderabad, Telangana 500033'
+export const OFFICE_HOURS = 'Mon – Sun: 9:30 AM – 7:00 PM'
 export const WHATSAPP_HREF =
   'https://wa.me/919876543210?text=' + encodeURIComponent('Hi, I am interested in your open plots.')
 

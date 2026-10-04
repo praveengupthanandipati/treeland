@@ -1,10 +1,5 @@
-const Gallery = () => (
-  <section className="page-placeholder">
-    <div className="site-container">
-      <h1>Gallery</h1>
-      <p>Photos from our sites and layouts.</p>
-    </div>
-  </section>
-)
+import GallerySection from '../components/GallerySection'
+
+const Gallery = () => <GallerySection isPage />
 
 export default Gallery

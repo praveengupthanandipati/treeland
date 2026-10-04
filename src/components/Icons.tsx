@@ -121,15 +121,106 @@ export const ArrowRightIcon = (props: IconProps) => (
   </svg>
 )
 
-export const CheckCircleIcon = (props: IconProps) => (
+export const ArrowLeftIcon = (props: IconProps) => (
+  <svg {...base} fill="none" stroke="currentColor" strokeWidth={2.2} strokeLinecap="round" strokeLinejoin="round" {...props}>
+    <path d="M19 12H5M11 6l-6 6 6 6" />
+  </svg>
+)
+
+export const ArrowUpRightIcon = (props: IconProps) => (
+  <svg {...base} fill="none" stroke="currentColor" strokeWidth={2.2} strokeLinecap="round" strokeLinejoin="round" {...props}>
+    <path d="M7 17 17 7M8 7h9v9" />
+  </svg>
+)
+
+export const AreaIcon = (props: IconProps) => (
+  <svg {...base} fill="none" stroke="currentColor" strokeWidth={1.7} strokeLinecap="round" strokeLinejoin="round" {...props}>
+    <path d="M4 9V4h5M15 4h5v5M20 15v5h-5M9 20H4v-5" />
+    <rect x="8" y="8" width="8" height="8" rx="1.5" />
+  </svg>
+)
+
+export const TagIcon = (props: IconProps) => (
+  <svg {...base} fill="none" stroke="currentColor" strokeWidth={1.7} strokeLinecap="round" strokeLinejoin="round" {...props}>
+    <path d="M3.5 12.6V4.5a1 1 0 0 1 1-1h8.1l8 8a1.5 1.5 0 0 1 0 2.1l-6.9 6.9a1.5 1.5 0 0 1-2.1 0l-8.1-7.9z" />
+    <circle cx="8.3" cy="8.3" r="1.4" />
+  </svg>
+)
+
+export const CheckCircleIcon =(props: IconProps) => (
   <svg {...base} fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" {...props}>
     <circle cx="12" cy="12" r="9.5" />
     <path d="m8 12.3 2.7 2.7L16 9.7" />
   </svg>
 )
 
-export const WhatsappIcon = (props: IconProps) => (
+export const LockKeyIcon = (props: IconProps) => (
+  <svg {...base} fill="none" stroke="currentColor" strokeWidth={1.7} strokeLinecap="round" strokeLinejoin="round" {...props}>
+    <rect x="4.5" y="10" width="15" height="11" rx="2.5" />
+    <path d="M8 10V7a4 4 0 0 1 8 0v3M12 14v3" />
+  </svg>
+)
+
+export const AmenitiesIcon = (props: IconProps) => (
+  <svg {...base} fill="none" stroke="currentColor" strokeWidth={1.7} strokeLinecap="round" strokeLinejoin="round" {...props}>
+    <path d="M3 21h18M5 21V8l6-4v17M11 21h8V11l-8-3" />
+    <path d="M8 10v.01M8 13.5v.01M8 17v.01M14.5 13.5h1.5M14.5 17h1.5" />
+  </svg>
+)
+
+export const WhatsappIcon =(props: IconProps) => (
   <svg {...base} viewBox="0 0 32 32" fill="currentColor" {...props}>
     <path d="M16 3C8.8 3 3 8.7 3 15.8c0 2.5.7 4.9 2 6.9L3.1 29l6.5-1.7c1.9 1 4.1 1.6 6.4 1.6 7.2 0 13-5.7 13-12.8S23.2 3 16 3zm0 23.5c-2 0-4-.5-5.7-1.6l-.4-.2-3.9 1 1-3.7-.3-.4c-1.2-1.8-1.8-3.8-1.8-5.9C4.9 9.8 9.9 5 16 5s11.1 4.8 11.1 10.8S22.1 26.5 16 26.5zm6.1-8.1c-.3-.2-2-1-2.3-1.1-.3-.1-.5-.2-.8.2l-1 1.3c-.2.2-.4.2-.7.1-.3-.2-1.4-.5-2.7-1.7-1-.9-1.7-2-1.9-2.3-.2-.3 0-.5.1-.7l.5-.6.3-.6c.1-.2.1-.4 0-.6l-1.1-2.6c-.3-.7-.6-.6-.8-.6h-.7c-.2 0-.6.1-.9.4-.3.3-1.2 1.1-1.2 2.8s1.2 3.2 1.4 3.5c.2.2 2.4 3.6 5.8 5 .8.4 1.4.6 1.9.7.8.3 1.6.2 2.2.1.7-.1 2-.8 2.3-1.6.3-.8.3-1.5.2-1.6-.1-.2-.3-.3-.6-.4z" />
+  </svg>
+)
+
+export const CalendarIcon = (props: IconProps) => (
+  <svg {...base} fill="none" stroke="currentColor" strokeWidth={1.7} strokeLinecap="round" strokeLinejoin="round" {...props}>
+    <rect x="3.5" y="5" width="17" height="15.5" rx="2.5" />
+    <path d="M3.5 10h17M8 3v4M16 3v4" />
+  </svg>
+)
+
+export const ClockIcon = (props: IconProps) => (
+  <svg {...base} fill="none" stroke="currentColor" strokeWidth={1.7} strokeLinecap="round" strokeLinejoin="round" {...props}>
+    <circle cx="12" cy="12" r="8.5" />
+    <path d="M12 7.5V12l3 2" />
+  </svg>
+)
+
+export const QuoteIcon = (props: IconProps) => (
+  <svg {...base} fill="currentColor" {...props}>
+    <path d="M9.6 5C6 6.4 3.5 9.6 3.5 13.6V19h6.6v-6.4H6.8c0-2.4 1.5-4.4 3.8-5.4L9.6 5zm10.4 0c-3.6 1.4-6.1 4.6-6.1 8.6V19h6.6v-6.4h-3.3c0-2.4 1.5-4.4 3.8-5.4L20 5z" />
+  </svg>
+)
+
+export const AwardIcon = (props: IconProps) => (
+  <svg {...base} fill="none" stroke="currentColor" strokeWidth={1.7} strokeLinecap="round" strokeLinejoin="round" {...props}>
+    <circle cx="12" cy="9" r="6" />
+    <path d="m8.5 13.9-1.5 7.1 5-2.5 5 2.5-1.5-7.1" />
+  </svg>
+)
+
+export const ExpandIcon = (props: IconProps) => (
+  <svg {...base} fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" {...props}>
+    <path d="M14 4h6v6M10 20H4v-6M20 4l-7 7M4 20l7-7" />
+  </svg>
+)
+
+export const ChevronLeftIcon = (props: IconProps) => (
+  <svg {...base} fill="none" stroke="currentColor" strokeWidth={2.2} strokeLinecap="round" strokeLinejoin="round" {...props}>
+    <path d="m15 5-7 7 7 7" />
+  </svg>
+)
+
+export const ChevronRightIcon = (props: IconProps) => (
+  <svg {...base} fill="none" stroke="currentColor" strokeWidth={2.2} strokeLinecap="round" strokeLinejoin="round" {...props}>
+    <path d="m9 5 7 7-7 7" />
+  </svg>
+)
+
+export const ArrowUpIcon = (props: IconProps) => (
+  <svg {...base} fill="none" stroke="currentColor" strokeWidth={2.2} strokeLinecap="round" strokeLinejoin="round" {...props}>
+    <path d="M12 19V5M6 11l6-6 6 6" />
   </svg>
 )

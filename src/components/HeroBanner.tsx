@@ -68,10 +68,6 @@ const HeroBanner = () => (
         <EnquiryForm />
       </div>
     </div>
-
-    <svg className="hero__curve" viewBox="0 0 1440 80" preserveAspectRatio="none" aria-hidden="true" focusable="false">
-      <path d="M0 80V48C240 16 480 0 720 0s480 16 720 48v32H0z" />
-    </svg>
   </section>
 )
 
